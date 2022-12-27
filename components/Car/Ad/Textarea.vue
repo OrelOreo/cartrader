@@ -1,0 +1,27 @@
+<script setup>
+const props = defineProps({
+    title: String,
+    placeholder: String,
+    name: String
+})
+
+const emits = defineEmits(['changeInput'])
+const state = ref('')
+const onChange = () => {
+    emits("changeInput", state.value , props.name)
+}
+</script>
+
+<template>
+    <div class="flex flex-col w-[100%] mt-2">
+        <label class="text-cyan-500 mb-1 text-sm" for="">{{ title }}</label>
+        <textarea 
+            type="text" 
+            class="p-2 border w-100 rounded" 
+            :placeholder="placeholder" 
+            v-model="state" 
+            @input="onChange"
+            :name="name">
+        </textarea>
+    </div>
+</template>
