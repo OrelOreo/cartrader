@@ -2,8 +2,17 @@
 definePageMeta({
     layout: "custom"
 })
+const user = useSupabaseUser()
+const {data: listings, refresh} = await useFetch(
+    `/api/car/listings/user/${user.value.id}`
+)
 
-const { listings } = useCars()
+const handleDelete = async (id) => {
+    await $fetch(`/api/car/listings/${id}`, {
+        method: "delete"
+    })
+    listings.value = listings.value.filter((listing => listing.id !== id))
+}
 </script>
 
 <template>
@@ -28,6 +37,7 @@ const { listings } = useCars()
             v-for="listing in listings" 
             :key="listing.id"
             :listing="listing"
+            @delete-click="handleDelete"
             />
         </div>
     </div>
