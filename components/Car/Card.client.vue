@@ -6,6 +6,8 @@ const props = defineProps({
   favored: Boolean
 })
 
+const config = useRuntimeConfig()
+
 const emit = defineEmits(['favor'])
 
 </script>
@@ -14,7 +16,7 @@ const emit = defineEmits(['favor'])
          <img class="absolute w-7 right-5 top-2 z-20" :src="favored ? heartFilled : heartOutline" @click="emit('favor', car.id)" alt="">
           <div class="flex h-full" @click="navigateTo(`/car/${car.name}-${car.id}`)">
             <NuxtImg 
-              :src="car.url" 
+              :src="`${config.public.supabase.url}/storage/v1/object/public/images/${car.image}`"
               alt="car" 
               class="w-[300px] h-full"
             />
